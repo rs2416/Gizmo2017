@@ -8,7 +8,4 @@ Parts of the code were inspired and adapted from the following sources.
 
 ## Contributors:
 
-Ruksana Shaukat Jali
-Francesca Suer
-Sophie Owen 
-Neel Le Penru
+Ruksana Shaukat Jali, Francesca Suer, Sophie Owen and Neel Le Penru
