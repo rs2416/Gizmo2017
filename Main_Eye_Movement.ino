@@ -6,9 +6,11 @@
 //Stepper Motor connected with dual motor driver
 
 
-const int IR_threshold = 10;
-const int stepper_speed = 10;
+const int IR_threshold = 10; // set the threshold distance for the IR sensor
+const int stepper_speed = 10; // set the speed for the stepper motor
 
+// last_position variable: this variable is constantly reassinged depending on the position the eye has moved to...
+// ...so that the appropriate code for each position runs (see below)
 int last_position = 0; // 0 = centre, -1 = left, 1 = right
 
 
@@ -23,11 +25,11 @@ int right_distance;
 
 //----STEPPER
 
-#include <Stepper.h>
+#include <Stepper.h> //use Arduino stepper motor library
 
-const int stepsPerRevolution = 30;  // change this to fit the number of steps per revolution
-// for your motor
+const int stepsPerRevolution = 30;  // this controls the number of steps per revolution of the motor
 
+// defining various 'moves' in terms of the stepsPerRevolution:
 int right = stepsPerRevolution; 
 int left = -stepsPerRevolution;
 int right_to_left = -2*stepsPerRevolution;
@@ -47,17 +49,17 @@ void setup() {
 
 //------Stepper
 
-  myStepper.setSpeed(stepper_speed);
+  myStepper.setSpeed(stepper_speed); //set stepper to speed determined earlier
 }
 
 
 //-----------------------------------------------------------MAIN CODE------------------------------------------------------------------------
 void loop() {
 
-//----------SETUP FOR IR Sensors
+//----------SETUP FOR IR Sensors: the IR sensors' raw data is calibrated to output distance information
 
 //IR (Left)
-  float voltsL = analogRead(sensorL)*0.0048828125;  // value from sensor * (5/1024)
+  float voltsL = analogRead(sensorL)*0.0048828125;  // value from sensor * (5/1024)  [5 volts and 10 bits]
   left_distance = 13*pow(voltsL, -1);
   delay(100);
 
@@ -67,26 +69,20 @@ void loop() {
   delay(100);
 
 
-
-
-
-
-
-
-  if (last_position == 0) { //ie. If the eye is in the centre
+  if (last_position == 0) { //ie. If the eye is in the centre run the code for the centre (so can only go left or right)
     if ((left_distance < IR_threshold) && (right_distance > IR_threshold)) { //Left IR sensed, turn left
-      Serial.println("Left IR SENSED");
+      Serial.println("Left IR SENSED"); //helpful to have serial printing when debugging and calibtrating the sensors
       Serial.println( "Left IR = ");Serial.println(left_distance);
       Serial.println("Right IR = ");Serial.println(right_distance);
       delay(100);
 
       Serial.println("left from centre");                         
       myStepper.step(left);
-      last_position = -1;
+      last_position = -1; //reassigns last_position to indicate that eye is in left position, hence now code continues under condition where last_position == -1 (below)
       delay(100);
-      }
+      } //this structure is repeated for the different combinations of moves that can occur when the eye is in each position.
 
-    else if ((left_distance > IR_threshold) && (right_distance < IR_threshold)) { //Right IR sensed, turn right
+    else if ((left_distance > IR_threshold) && (right_distance < IR_threshold)) { //Right IR sensed, turn right -- same as before but for right sensor
       Serial.println("Right IR SENSED");
       Serial.println( "Left IR = ");Serial.println(left_distance);
       Serial.println("Right IR = ");Serial.println(right_distance);
@@ -97,14 +93,9 @@ void loop() {
       last_position = 1;
       delay(100);
       }
-
-//    else {
-//      last_position = 0;
-//    }
   }
   
-  
-  if (last_position == 1) { //ie. Eye is on the right
+  if (last_position == 1) { //ie. Eye is on the right so can only go to centre or left positions
     if((left_distance < IR_threshold) && (right_distance > IR_threshold)) { //Left IR sensed, go all the way left
 
       Serial.println("Left IR SENSED");
@@ -139,13 +130,10 @@ void loop() {
       myStepper.step(left);
       last_position = 0;
       delay(100);
-      }
-//    else {
-//      last_position = 1;
-//      }         
+      }        
   }
 
-  if (last_position == -1) {
+  if (last_position == -1) { //ie. Eye is on the left so can only go to centre or right positions
     if((left_distance > IR_threshold) && (right_distance < IR_threshold)) { //Right IR sensed, go all the way right
       Serial.println("Right IR SENSED");
       Serial.println( "Left IR = ");Serial.println(left_distance);
@@ -181,10 +169,6 @@ void loop() {
       last_position = 0;
       delay(100);  
       }
-
-//    else {
-//      last_position = -1;
-//      }
   }
 }
 
