@@ -4,7 +4,7 @@
 
 Panopticon is a responsive mechanical eye. The project integrates machine elements with simple feedback control systems, in which a variety of sensors and actuators are connected to Arduino and Raspberry Pi.
 
-The eye responds to changes in light intensity. When these changes are sensed by a photoresistor, a servo is actuated resulting in the iris mechanism contracting or dilating appropriately. The eye also responds and rotates when it senses a presence, through aid of two IR sensors and a stepper motor.  Within the structure in the centre of the eye sits a RaspberryPi camera which projects a live camera feed onto a screen that reflects back to the observer via mirrors on the back of the structure. 
+The eye responds to changes in light intensity. When these changes are sensed by a photoresistor, a servo is actuated resulting in the iris mechanism contracting or dilating appropriately. The eye also responds and rotates when it senses a presence, through the aid of two IR sensors and a stepper motor.  Within the structure in the centre of the eye sits a Raspberry Pi camera which projects a live camera feed onto a screen that reflects back to the observer via mirrors at the rear of the structure. 
 
 Our name was inspired by the institutional building and system of control, ‘The Panopticon’, introduced by English philosopher, Jeremy Bentham. The theme of the design is to allow the inmates to be observed by a single watchman, the setup is such that the inmates do not know when they are being watched therefore are constantly under watch.
 
