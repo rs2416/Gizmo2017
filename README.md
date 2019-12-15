@@ -20,4 +20,6 @@ Parts of the code were inspired and adapted from the following sources.
 - Installing PiCamera Module from https://www.raspberrypi.org/documentation/usage/camera/python/README.md
 - Code for running startup on Raspberry Pi from https://raspberrypi.stackexchange.com/questions/8734/execute-script-on-start-up
 
+## Watch our video:
 
+*https://youtu.be/HpfL3DRhfME*
